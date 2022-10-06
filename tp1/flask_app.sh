@@ -7,7 +7,4 @@ cd LOG8415E
 git pull
 cd tp1/flask_app
 pip3 install -r requirements.txt
-tmux kill-session -t flask
-tmux new-session -d -s flask
-tmux send-keys 'sudo python3 app.py' C-m
-tmux detach -s flask
+nohup python3 app.py &
