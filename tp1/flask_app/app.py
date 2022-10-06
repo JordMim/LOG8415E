@@ -2,7 +2,7 @@ from flask import Flask
 import logging
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, format='%(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 # Create Flask app
 app = Flask(__name__)
