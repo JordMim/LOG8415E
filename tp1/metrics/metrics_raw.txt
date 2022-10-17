@@ -1,0 +1,175 @@
+{
+    "HTTPCode_Target_2XX_Count": {
+        "cluster1": {
+            "Id": "string",
+            "Label": "HTTPCode_Target_2XX_Count",
+            "StatusCode": "Complete",
+            "Timestamps": [
+                "2022-10-17 21:23:00+00:00",
+                "2022-10-17 21:22:00+00:00",
+                "2022-10-17 21:21:00+00:00"
+            ],
+            "Values": [
+                1000.0,
+                638.0,
+                862.0
+            ]
+        },
+        "cluster2": {
+            "Id": "string",
+            "Label": "HTTPCode_Target_2XX_Count",
+            "StatusCode": "Complete",
+            "Timestamps": [
+                "2022-10-17 21:25:00+00:00",
+                "2022-10-17 21:24:00+00:00",
+                "2022-10-17 21:23:00+00:00"
+            ],
+            "Values": [
+                1000.0,
+                801.0,
+                699.0
+            ]
+        }
+    },
+    "HTTPCode_Target_4XX_Count": {
+        "cluster1": {
+            "Id": "string",
+            "Label": "HTTPCode_Target_4XX_Count",
+            "StatusCode": "Complete",
+            "Timestamps": [],
+            "Values": []
+        },
+        "cluster2": {
+            "Id": "string",
+            "Label": "HTTPCode_Target_4XX_Count",
+            "StatusCode": "Complete",
+            "Timestamps": [],
+            "Values": []
+        }
+    },
+    "HTTPCode_Target_5XX_Count": {
+        "cluster1": {
+            "Id": "string",
+            "Label": "HTTPCode_Target_5XX_Count",
+            "StatusCode": "Complete",
+            "Timestamps": [],
+            "Values": []
+        },
+        "cluster2": {
+            "Id": "string",
+            "Label": "HTTPCode_Target_5XX_Count",
+            "StatusCode": "Complete",
+            "Timestamps": [],
+            "Values": []
+        }
+    },
+    "RequestCount": {
+        "cluster1": {
+            "Id": "string",
+            "Label": "RequestCount",
+            "StatusCode": "Complete",
+            "Timestamps": [
+                "2022-10-17 21:27:00+00:00",
+                "2022-10-17 21:26:00+00:00",
+                "2022-10-17 21:25:00+00:00",
+                "2022-10-17 21:24:00+00:00",
+                "2022-10-17 21:23:00+00:00",
+                "2022-10-17 21:22:00+00:00",
+                "2022-10-17 21:21:00+00:00",
+                "2022-10-17 21:20:00+00:00"
+            ],
+            "Values": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1000.0,
+                638.0,
+                862.0,
+                0.0
+            ]
+        },
+        "cluster2": {
+            "Id": "string",
+            "Label": "RequestCount",
+            "StatusCode": "Complete",
+            "Timestamps": [
+                "2022-10-17 21:27:00+00:00",
+                "2022-10-17 21:26:00+00:00",
+                "2022-10-17 21:25:00+00:00",
+                "2022-10-17 21:24:00+00:00",
+                "2022-10-17 21:23:00+00:00",
+                "2022-10-17 21:22:00+00:00",
+                "2022-10-17 21:21:00+00:00",
+                "2022-10-17 21:20:00+00:00"
+            ],
+            "Values": [
+                0.0,
+                0.0,
+                1000.0,
+                801.0,
+                699.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "elb": {
+            "Id": "string",
+            "Label": "RequestCount",
+            "StatusCode": "Complete",
+            "Timestamps": [
+                "2022-10-17 21:27:00+00:00",
+                "2022-10-17 21:26:00+00:00",
+                "2022-10-17 21:25:00+00:00",
+                "2022-10-17 21:24:00+00:00",
+                "2022-10-17 21:23:00+00:00",
+                "2022-10-17 21:22:00+00:00",
+                "2022-10-17 21:21:00+00:00",
+                "2022-10-17 21:20:00+00:00"
+            ],
+            "Values": [
+                0.0,
+                0.0,
+                1000.0,
+                801.0,
+                1699.0,
+                638.0,
+                862.0,
+                0.0
+            ]
+        }
+    },
+    "TargetResponseTime": {
+        "cluster1": {
+            "Id": "string",
+            "Label": "TargetResponseTime",
+            "StatusCode": "Complete",
+            "Timestamps": [
+                "2022-10-17 21:23:00+00:00",
+                "2022-10-17 21:22:00+00:00",
+                "2022-10-17 21:21:00+00:00"
+            ],
+            "Values": [
+                1.909,
+                1.76,
+                1.689
+            ]
+        },
+        "cluster2": {
+            "Id": "string",
+            "Label": "TargetResponseTime",
+            "StatusCode": "Complete",
+            "Timestamps": [
+                "2022-10-17 21:25:00+00:00",
+                "2022-10-17 21:24:00+00:00",
+                "2022-10-17 21:23:00+00:00"
+            ],
+            "Values": [
+                1.741,
+                1.789,
+                1.717
+            ]
+        }
+    }
+}
