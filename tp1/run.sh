@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$EUID" -ne 0 ]
-  then echo "Please run as root."
+  then echo "Please run as root using sudo .\run.sh"
   exit
 fi
 
