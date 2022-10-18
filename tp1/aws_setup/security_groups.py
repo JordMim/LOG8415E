@@ -1,6 +1,6 @@
 from time import sleep
 from typing import Collection
-import logging
+import logging, sys
 from boto3_type_annotations.ec2 import ServiceResource, SecurityGroup
 
 def get_security_group(ec2: ServiceResource, name: str):
@@ -11,11 +11,20 @@ def get_security_group(ec2: ServiceResource, name: str):
     return None
 
 def delete_security_group(ec2: ServiceResource, name: str):
+    logging.info(f'Deleting security group...')
     security_group = get_security_group(ec2, name)
-    if security_group is not None:
-        security_group.revoke_ingress(IpPermissions=security_group.ip_permissions)
-        security_group.delete()
-        sleep(15)
+    for i in range(50):
+        security_group.reload()
+        try:
+            if security_group.ip_permissions:
+                security_group.revoke_ingress(IpPermissions=security_group.ip_permissions)
+            security_group.delete()
+            logging.info(f'  {name}: Deleted.')
+            return
+        except:
+            sleep(2)
+    logging.error('Unable to delete the security group. Please relaunch the script.')
+    sys.exit(1)
 
 def create_security_group(ec2: ServiceResource, name: str) -> SecurityGroup:
     logging.info(f'Creating security group "{name}"...')

@@ -1,4 +1,4 @@
-import logging
+import logging, sys
 from time import sleep
 from typing import List, Any
 from boto3_type_annotations.elbv2 import Client
@@ -8,9 +8,19 @@ def delete_all_target_groups(client: Client):
     logging.info('Deleting all target groups...')
     target_groups = client.describe_target_groups()['TargetGroups']
     for target_group in target_groups:
-        client.delete_target_group(TargetGroupArn=target_group['TargetGroupArn'])
-        sleep(15)
-        logging.info('  {}: Deleted.'.format(target_group['TargetGroupName']))
+        success=False
+        for i in range(10):
+            try:
+                client.delete_target_group(TargetGroupArn=target_group['TargetGroupArn'])
+                logging.info('  {}: Deleted.'.format(target_group['TargetGroupName']))
+                success=True
+                break
+            except:
+                sleep(5)
+        if not success:
+            logging.error('Unable to delete the target group.')
+            sys.exit(1)
+        
 
 def get_target_group(client: Client, name: str):
     target_groups = client.describe_target_groups()['TargetGroups']
@@ -52,7 +62,6 @@ def delete_load_balancers(client: Client):
     load_balancers = client.describe_load_balancers()['LoadBalancers']
     for load_balancer in load_balancers:
         client.delete_load_balancer(LoadBalancerArn=load_balancer['LoadBalancerArn'])
-        sleep(15)
         logging.info('  {}: Deleted.'.format(load_balancer['LoadBalancerName']))
     
 
@@ -157,6 +166,7 @@ def wait_for_provisioning(client: Client, load_balancer: Any):
             if load_balancer_info['LoadBalancerArn'] == load_balancer['LoadBalancerArn']:
                 if load_balancer_info['State']['Code'] == 'active':
                     return load_balancer_info
+                sleep(2)
 
 def get_load_balancer(client: Client, name: str):
     load_balancers = client.describe_load_balancers()['LoadBalancers']

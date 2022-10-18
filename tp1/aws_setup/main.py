@@ -25,6 +25,7 @@ INSTANCE_INFOS = [
 ]
 
 ec2: ec2ServiceResource = boto3.resource('ec2')
+
 elbv2: elbv2Client = boto3.client('elbv2')
 
 # Retrieve default Vpc
