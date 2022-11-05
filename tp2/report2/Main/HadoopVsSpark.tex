@@ -1,0 +1,6 @@
+\pagebreak
+\section{Performance comparison of Hadoop vs. Spark on AWS.} \label{T3}
+\paragraph{} We performed several measurements on the load balancer, cluster 1 (t2.large instances) and cluster 2 (m4.large instances). We have 6 diagrams representing all interesting data for the comparison of the 2 clusters. First, we calculated the number of requests made over a time interval. We did this for the load balancer as well as for the two clusters. Then, we have 3 diagrams representing the status codes, i.e. all the codes 2XX, 4XX and 5XX of the requests sent previously. Finally, the last diagram represents the average response time of each cluster for the same requests of diagram 1.
+
+\paragraph{} All the data was fetch using Boto3 CloudWatch API. Our script was made to automatically generate latex plots.
+\paragraph{} This diagram (figure 3.6) shows that the cluster 2 has a slightly better average time of response than the cluster 1. However, the difference is so small that we cannot conclude anything over this. Overall, both clusters seem to perform similarly.
