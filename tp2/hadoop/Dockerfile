@@ -1,5 +1,4 @@
 FROM ubuntu:20.04
-EXPOSE 22
 EXPOSE 80
 
 WORKDIR /root
@@ -19,15 +18,6 @@ RUN apt install -y curl
 RUN apt install -y python3 
 RUN apt install -y python3-pip 
 RUN apt install -y time
-
-# SSH
-# COPY id_dsa.pub /root/.ssh/authorized_keys
-# COPY id_dsa.pub /root/.ssh/id_dsa.pub
-# COPY id_dsa     /root/.ssh/id_dsa
-# RUN chmod 600 /root/.ssh/authorized_keys
-# RUN chmod 600 /root/.ssh/id_dsa.pub
-# RUN chmod 600 /root/.ssh/id_dsa
-# RUN /usr/sbin/sshd
 
 # Input files
 ENV HADOOP_INPUT_DIR "/root/input"
