@@ -1,4 +1,4 @@
-import logging, requests, tqdm, random, boto3, instances
+import logging, requests, tqdm, random, boto3, instances, json
 
 INSTANCE = instances.retreive_instance()
 INSTANCE.load()
@@ -48,7 +48,9 @@ hadoop_vs_linux = benchmark(
     ],
     10
 )
-print(hadoop_vs_linux)
+with open('hadoop_vs_linux.json', 'w') as file:
+    file.write(json.dumps(hadoop_vs_linux, indent=4))
+logging.info('Results written to hadoop_vs_linux.json.')
 
 logging.info('HADOOP vs SPARK')
 hadoop_vs_spark = benchmark(
@@ -67,4 +69,6 @@ hadoop_vs_spark = benchmark(
     ],
     3
 )
-print(hadoop_vs_spark)
+with open('hadoop_vs_spark.json', 'w') as file:
+    file.write(json.dumps(hadoop_vs_spark, indent=4))
+logging.info('Results written to hadoop_vs_spark.json.')

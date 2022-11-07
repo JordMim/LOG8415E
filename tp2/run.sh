@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$EUID" -ne 0 ]
-  then echo "Please run as root using sudo .\run.sh"
+  then echo "Please run as root using sudo ./run.sh"
   exit
 fi
 
@@ -73,19 +73,22 @@ echo ""
 echo "Please choose one of the options below:"
 echo "1. Configure AWS."
 echo "2. Run benchmarks."
-echo "3. Do everything."
+echo "3. Run Social Network Problem."
+echo "4. Do everything."
 echo ""
 read -p "What do you want to do? " selection
-echo ""
 
 script_aws=false
 script_benchmark=false
+script_social=false
 
 case $selection in 
 	1 ) script_aws=true;;
     2 ) script_benchmark=true;;
-    3 ) script_aws=true
-        script_benchmark=true;;
+    3 ) script_social=true;;
+    4 ) script_aws=true
+        script_benchmark=true
+        script_social=true;;
 	* ) echo "Invalid response, please retry.";
 esac
 
@@ -145,30 +148,24 @@ fi
 
 
 # ------------------------------------------------------------------#
-# SCRIPT: METRICS RETRIEVER                                         #
+# SCRIPT: SOCIAL NETWORK                                            #
 # ------------------------------------------------------------------#
 
-if [ "$script_metrics" = true ] ; then
+if [ "$script_social" = true ] ; then
     echo ""
     echo "=============================================="
-    echo "|            METRICS RETRIEVER               |"
+    echo "|              SOCIAL NETWORK                 |"
     echo "=============================================="
     echo ""
-    # if we just sent the request, we should wait one minute for the metrics to appear
-    if [ "$script_requests" = true ] ; then
-        echo "Waiting 1 minute before retrieving metrics..."
-        sleep 60
-    fi
     cd "$SCRIPT_DIR"
-    cd metrics
+    cd social-network-client
     echo "Installing requirements..."
     pip3 install -r requirements.txt 2>&1 >/dev/null
-    echo "Starting metrics retriever..."
+    echo "Starting Social Network client..."
     python3 main.py
     ret=$?
     if [ $ret -ne 0 ]; then
-        echo "Metrics resolver exited with error code $ret"
+        echo "Social Network client exited with error code $ret"
         exit
     fi
-
 fi
