@@ -1,65 +1,25 @@
-from flask import Flask, request, abort
-import logging, subprocess, os, shutil
-
-JAR_DIR = os.environ.get('HADOOP_JAVA_FILES', '')
-EXAMPLES_JAR_FILE = os.environ.get('HADOOP_EXAMPLES_JAR_FILE', '')
-INPUT_DIR = os.environ.get('HADOOP_INPUT_DIR', '')
-OUTPUT_DIR = os.environ.get('HADOOP_OUTPUT_DIR', '')
-TIME_OUTPUT = os.environ.get('HADOOP_TIME_OUTPUT', '')
-TIME_OUTPUT = os.environ.get('HADOOP_TIME_OUTPUT', '')
+import flask, logging, mapreduce_hadoop, mapreduce_spark, linux
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 # Create Flask app
-app = Flask(__name__)
+app = flask.Flask(__name__)
 
-# Cluster 1
-@app.route('/run', methods=['POST'])
-def run():
-    data = request.get_json()
-    jar_file = data['jar_file']
-    main_class = data['main_class']
-    input_file = data['input_file']
+# Hadoop: Word Count
+@app.route('/hadoop/wordcount/<input>', methods=['GET'])
+def hadoop_wordcount(input: str):
+    return mapreduce_hadoop.word_count(input)
 
-    # Mapreduce example file
-    if jar_file == 'hadoop-mapreduce-examples.jar':
-        jar_file_path = EXAMPLES_JAR_FILE
-    
-    # Other mapreduce files
-    else:
-        jar_file_path = os.path.join(JAR_DIR, jar_file)
+# Spark: Word Count
+@app.route('/spark/wordcount/<input>', methods=['GET'])
+def spark_wordcount(input: str):
+    return mapreduce_spark.word_count(input)
 
-    # Check if jar file exists
-    if not os.path.isfile(jar_file_path):
-        abort(404)
-    
-    # Check if input file exists
-    input_file_path = os.path.join(INPUT_DIR, input_file)
-    if not os.path.isfile(jar_file_path):
-        abort(404)
-
-    # Clear output directory
-    if os.path.isdir(OUTPUT_DIR):
-        shutil.rmtree(OUTPUT_DIR)
-
-    # Clear time output file
-    if os.path.isfile(TIME_OUTPUT):
-        os.unlink(TIME_OUTPUT)
-
-    # Running hadoop
-    args = ['time', '-v', '-o', TIME_OUTPUT, 'hadoop', 'jar', jar_file_path, main_class, input_file_path, OUTPUT_DIR]
-    process = subprocess.run(args, capture_output=True)
-
-    # Read time output
-    with open(TIME_OUTPUT) as file:
-        time_output = file.read()
-
-    # Return values
-    return {
-        'time_output': time_output,
-        'hadoop_output': process.stderr.decode()
-    }
+# Linux: Word Count
+@app.route('/linux/wordcount/<input>', methods=['GET'])
+def linux_wordcount(input: str):
+    return linux.word_count(input)
 
 # Ping
 @app.route('/ping')

@@ -1,44 +1,97 @@
 FROM ubuntu:20.04
-EXPOSE 80
 
+
+
+# --------------------------------------------------------------------------- #
+# Common                                                                      #
+# --------------------------------------------------------------------------- #
+
+# Directory structure
 WORKDIR /root
+ENV ROOT_DIR   "/root"
+ENV OUTPUT_DIR    "$ROOT_DIR/output"
+ENV INPUT_DIR     "$ROOT_DIR/input"
+ENV TIME_FILE     "$ROOT_DIR/time.txt"
+RUN mkdir $OUTPUT_DIR
 
-# ENVIRONMENT
-ENV DEBIAN_FRONTEND "noninteractive"
-ENV JAVA_HOME "/usr/lib/jvm/java-11-openjdk-amd64"
-ENV HADOOP_HOME "/usr/local/hadoop-3.3.4"
-ENV HADOOP_EXAMPLES_JAR_FILE "$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar"
-ENV PATH "$JAVA_HOME:$PATH"
-ENV PATH "$HADOOP_HOME/bin:$PATH"
-
-# PACKAGES
+# Update package repository
 RUN apt update
+
+# Install required packages
+RUN apt install -y curl
+
+# Copy input files
+COPY input /root/input
+
+
+
+# --------------------------------------------------------------------------- #
+# Hadoop                                                                      #
+# --------------------------------------------------------------------------- #
+
+# Install required packages
+ENV DEBIAN_FRONTEND "noninteractive"
 RUN apt install -y default-jdk
-RUN apt install -y curl 
-RUN apt install -y python3 
-RUN apt install -y python3-pip 
-RUN apt install -y time
+ENV JAVA_HOME "/usr/lib/jvm/java-11-openjdk-amd64"
+ENV PATH "$JAVA_HOME:$PATH"
 
-# Input files
-ENV HADOOP_INPUT_DIR "/root/input"
-RUN mkdir $HADOOP_INPUT_DIR
-RUN curl https://www.gutenberg.org/cache/epub/4300/pg4300.txt --output $HADOOP_INPUT_DIR/pg4300.txt
-
-# Output directory
-ENV HADOOP_OUTPUT_DIR "/root/output"
-RUN mkdir $HADOOP_OUTPUT_DIR
-
-# Time output file
-ENV HADOOP_TIME_OUTPUT "/root/time.txt"
-
-# HADOOP Installation
+# Install Hadoop
 RUN curl https://dlcdn.apache.org/hadoop/common/hadoop-3.3.4/hadoop-3.3.4.tar.gz --output hadoop-3.3.4.tar.gz
 RUN tar -xf hadoop-3.3.4.tar.gz -C /usr/local/
+
+# Set Hadoop environment variables
+ENV HADOOP_HOME "/usr/local/hadoop-3.3.4"
+ENV PATH "$HADOOP_HOME/bin:$PATH"
 RUN echo "export JAVA_HOME=$JAVA_HOME" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
-# Flask app
+# Set Hadoop directories
+ENV HADOOP_OUTPUT_DIR    "$OUTPUT_DIR/hadoop"
+
+# MapReduce files
+ENV HADOOP_MAPREDUCE_EXAMPLES "$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar"
+
+
+
+# --------------------------------------------------------------------------- #
+# Spark                                                                       #
+# --------------------------------------------------------------------------- #
+
+# Set Spark directories
+ENV SPARK_OUTPUT_DIR "$OUTPUT_DIR/spark"
+RUN mkdir $SPARK_OUTPUT_DIR
+
+
+
+# --------------------------------------------------------------------------- #
+# Flask API                                                                   #
+# --------------------------------------------------------------------------- #
+
+# Expose Flask port
+EXPOSE 80
+
+# Install required packages
+RUN apt install -y python3 python3-pip time
+
+# Install Python requirements
 COPY requirements.txt /root/requirements.txt
 RUN pip3 install -r requirements.txt
-COPY app.py /root/app.py
 
+# Copy Flask app
+COPY app.py /root/app.py
+COPY utils.py /root/utils.py
+COPY mapreduce_spark.py /root/mapreduce_spark.py
+COPY mapreduce_hadoop.py /root/mapreduce_hadoop.py
+COPY linux.py /root/linux.py
+
+
+# --------------------------------------------------------------------------- #
+# Linux                                                                       #
+# --------------------------------------------------------------------------- #
+
+COPY scripts/linux_wordcount.sh /root/linux_wordcount.sh
+ENV LINUX_WORDCOUNT_SCRIPT "$ROOT_DIR/linux_wordcount.sh"
+COPY scripts/spark_wordcount.py /root/spark_wordcount.py
+ENV SPARK_WORDCOUNT_SCRIPT "$ROOT_DIR/spark_wordcount.py"
+
+# Set Flask app as the running application
 ENTRYPOINT python3 ./app.py
