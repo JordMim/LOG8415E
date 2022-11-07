@@ -12,7 +12,7 @@ def hadoop_wordcount(input: str):
     return mapreduce_hadoop.word_count(input)
 
 # Hadoop: Social Network
-@app.route('/linux/socialnetwork/<input>', methods=['GET'])
+@app.route('/hadoop/socialnetwork/<input>', methods=['GET'])
 def hadoop_social_network(input: str):
     return mapreduce_hadoop.social_network(input)
 

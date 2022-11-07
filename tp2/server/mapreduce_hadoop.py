@@ -1,4 +1,4 @@
-import os, utils, subprocess, re
+import os, utils, subprocess, re, logging
 
 
 INPUT_DIR  = os.environ.get('INPUT_DIR', '')
@@ -48,7 +48,7 @@ def social_network(input: str):
 
 	# Set the base variables
 	social_network_jar_file = utils.verify_file(os.environ.get('HADOOP_MAPREDUCE_SOCIAL_NETWORK', ''))
-	mapreduce_class   = 'SocialNetwork'
+	mapreduce_class   = 'polymtl.SocialNetwork'
 	time_file         = TIME_FILE
 	input_file        = utils.verify_file(os.path.join(INPUT_DIR, input))
 	output_dir        = OUTPUT_DIR
@@ -73,7 +73,7 @@ def social_network(input: str):
 		line = line.split('\t')
 		# Extract word and count
 		if len(line) == 2:
-			recommendations_str = ','.split(line[1])
+			recommendations_str = line[1].split(',')
 			recommendations = []
 			for recommendation in recommendations_str:
 				recommendations.append(int(recommendation))
