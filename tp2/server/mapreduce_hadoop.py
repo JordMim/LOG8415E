@@ -85,5 +85,6 @@ def social_network(input: str):
 	return {
 		'time': utils.parse_time_output(utils.read_file(time_file)),
 		'recommendations': output,
+		'raw_recommendations': output_raw,
 		'stdout': process.stderr.decode(),
 	}
