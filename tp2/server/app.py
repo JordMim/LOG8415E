@@ -11,6 +11,11 @@ app = flask.Flask(__name__)
 def hadoop_wordcount(input: str):
     return mapreduce_hadoop.word_count(input)
 
+# Hadoop: Social Network
+@app.route('/linux/socialnetwork/<input>', methods=['GET'])
+def hadoop_social_network(input: str):
+    return mapreduce_hadoop.social_network(input)
+
 # Spark: Word Count
 @app.route('/spark/wordcount/<input>', methods=['GET'])
 def spark_wordcount(input: str):
@@ -20,6 +25,8 @@ def spark_wordcount(input: str):
 @app.route('/linux/wordcount/<input>', methods=['GET'])
 def linux_wordcount(input: str):
     return linux.word_count(input)
+
+
 
 # Ping
 @app.route('/ping')

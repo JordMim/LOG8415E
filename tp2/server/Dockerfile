@@ -48,7 +48,9 @@ RUN echo "export JAVA_HOME=$JAVA_HOME" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 ENV HADOOP_OUTPUT_DIR    "$OUTPUT_DIR/hadoop"
 
 # MapReduce files
+COPY mapreduce /root/mapreduce
 ENV HADOOP_MAPREDUCE_EXAMPLES "$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar"
+ENV HADOOP_MAPREDUCE_SOCIAL_NETWORK "$ROOT_DIR/mapreduce/social-network-1.0.jar"
 
 
 
