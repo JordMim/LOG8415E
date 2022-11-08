@@ -1,7 +1,5 @@
 # LOG8415E - Assignment 2
 
-Instructions on how to launch our environment and tests are available in the [tp2.pdf](tp2.pdf) file.
-
 ## Dependencies:
 
 You need to have Python 3 and AWS CLI installed on your machine. Please refer to [this](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [this](https://docs.python-guide.org/starting/install3/linux/) in order to install them.
