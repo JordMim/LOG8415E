@@ -1,0 +1,10 @@
+\section{Describe your algorithm to tackle the social network problem.} \label{T5}
+
+\paragraph{}To solve the social network problem we had to use the map reduce algorithm to treat the data. Initially, we had every user id and their list of friends. The goal is to recommend to the user a list of mutual friend between himself and his friends. 
+
+\paragraph{}To approach this problem, we created a Recommendation class that has two attributes: a int representing the friend to add as a recommendation and another int representing the mutual friend. The mutual friend field has a value of -1 if he is a direct friend of the current user. 
+
+\paragraph{}For the Map function, it process a text line to retrieve the user and his list of friend. From the moment that a user has friends, for each friend we add him to the list of friends of the user. Then, we write with the user as the key and a recommendation of the friend with a mutual friend value of -1 as the value, the format is as followed : Recommendation(friend, -1). This indicates that this direct friend can be omitted in the reduce step. After all friends are added to the friends list, we wrote recommendations in both ways for each pair of friend, because they all have the current user as mutual.
+
+\paragraph{}For the Reduce function, we start by counting all the recommended users that have the same key and that are not direct friend (!= -1) by merging the same keys in an HashMap. Then, we used a comparator to sort our map by reverse key and then by value. After filtering the entries by removing the recommended users already friends with the user, we kept the 10 most recommended friends and added them to a final recommendation list of friend. The final step was to write this final recommendation as the values and the user as the key in the format of the initial text file.
+\pagebreak

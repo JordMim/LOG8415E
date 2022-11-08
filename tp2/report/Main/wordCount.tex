@@ -1,0 +1,32 @@
+\section{Experiments with WordCount program.} \label{T1}
+
+\paragraph{}To wrap all WrapCount implementations, we decided to create a Docker image that expose a REST API allowing us to send WordCount tasks to any desired implementation. This Docker image is available on Docker Hub (`lombardoa/tp2`) and can be run locally or on a AWS Instance. 
+
+\paragraph{}Running the image locally is straight forward. Deploying the image on a AWS instance can be automatically done using our script and will be shown in the last section of this document.
+
+\paragraph{}We started by creating a Docker image based on Ubuntu 20.04. We then installed Java and Hadoop and did the configuration for Hadoop to run in standalone mode. We then copied the input file `pg4300.txt`. After testing it by passing through the instance shell, we then created a Flask wrapper that run Hadoop MapReduce task using the linux `time` command, wait for the completion and read and process the output of both Hadoop and time. By doing so, we can use the REST API to start MapReduce task and receive its execution time and its output as a response. We used this interface to do the performance comparisons of the next section.
+
+\paragraph{}For the Linux WordCount program, we simply created a bash script that splits the content of the input file in words by using the `tr` command, then sort these words by using the `sort` command, then count the occurence of each words using the `uniq -c` command. The script output its result in the stdout stream. We then added a Flask route for running a WordCount using this script, again using the `time` command.
+
+\paragraph{}Finally, implementing Spark WordCount was straigth forward, since there are multiple guides online explaining how to it. We then created a Python script that execute a WordCount program using Spark, then once again wrapped it inside our Flask app.
+
+\paragraph{}This gives us three different routes that we used in the next section to create a benchmark script:
+
+\begin{itemize}
+  \item http://\{address\}/hadoop/wordcount/\{input\_file\}
+  \item http://\{address\}/spark/wordcount/\{input\_file\}
+  \item http://\{address\}/linux/wordcount/\{input\_file\}
+\end{itemize}
+\pagebreak
+
+
+
+
+
+
+
+
+
+
+
+
