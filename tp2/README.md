@@ -80,6 +80,30 @@ INFO - Waiting for the instance to respond to pings...
 INFO -   i-03e5403f2bbac7c76: Up.
 INFO - Instance public DNS: ec2-3-87-250-207.compute-1.amazonaws.com
 
+==============================================
+|                BENCHMARK                   |
+==============================================
+
+Installing requirements...
+Starting Benchmark...
+INFO - HADOOP vs LINUX
+100%|██████████████████████████████| 20/20 [01:05<00:00,  3.30s/it]
+INFO - Results written to hadoop_vs_linux.json.
+INFO - HADOOP vs SPARK
+100%|██████████████████████████████| 54/54 [06:25<00:00,  7.13s/it]
+INFO - Results written to hadoop_vs_spark.json.
+
+==============================================
+|              SOCIAL NETWORK                 |
+==============================================
+
+Installing requirements...
+Starting Social Network client...
+INFO - Starting Hadoop MapReduce job...
+INFO - Processing results...
+INFO - All recommendations written to output_all.json.
+INFO - Report recommendations written to output_report.json.
+INFO - Raw recommendations written to output_raw.txt
 ```
 
 ## Output
