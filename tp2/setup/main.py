@@ -2,7 +2,7 @@
 import boto3
 import logging
 from boto3_type_annotations.ec2 import ServiceResource as ec2ServiceResource
-import security_groups, instances, vpcs, subnets
+import security_groups, instances
 
 
 # Configure logging
