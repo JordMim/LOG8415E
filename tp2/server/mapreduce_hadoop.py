@@ -7,6 +7,16 @@ TIME_FILE  = os.environ.get('TIME_FILE', '')
 
 
 def word_count(input: str):
+	'''
+    The Hadoop WordCount wrapper function.
+
+    This runs a Hadoop WordCount task and returns the results of it.
+
+        Parameters:
+            input (str): The input file to use as input for the task.
+        Returns:
+            results (dict): The time and data output of the task.
+    '''
 
 	# Set the base variables
 	examples_jar_file = utils.verify_file(os.environ.get('HADOOP_MAPREDUCE_EXAMPLES', ''))
@@ -45,6 +55,16 @@ def word_count(input: str):
 	}
 
 def social_network(input: str):
+	'''
+    The Hadoop Social Network wrapper function.
+
+    This runs a Hadoop Social Network task and returns the results of it.
+
+        Parameters:
+            input (str): The input file to use as input for the task.
+        Returns:
+            results (dict): The time and data output of the task.
+    '''
 
 	# Set the base variables
 	social_network_jar_file = utils.verify_file(os.environ.get('HADOOP_MAPREDUCE_SOCIAL_NETWORK', ''))

@@ -1,13 +1,23 @@
 import os, utils, subprocess
 
-
+# Global variables
 INPUT_DIR  = os.environ.get('INPUT_DIR', '')
 TIME_FILE  = os.environ.get('TIME_FILE', '')
 WORDCOUNT_SCRIPT = os.environ.get('LINUX_WORDCOUNT_SCRIPT', '')
 
 
 def word_count(input: str):
+    '''
+    The Linux WordCount wrapper function.
 
+    This runs a Linux WordCount task and returns the results of it.
+
+        Parameters:
+            input (str): The input file to use as input for the task.
+        Returns:
+            results (dict): The time and data output of the task.
+    '''
+    
 	# Set the base variables
     time_file         = TIME_FILE
     input_file        = utils.verify_file(os.path.join(INPUT_DIR, input))

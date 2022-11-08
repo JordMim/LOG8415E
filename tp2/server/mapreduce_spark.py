@@ -8,6 +8,16 @@ WORDCOUNT_SCRIPT = os.environ.get('SPARK_WORDCOUNT_SCRIPT', '')
 
 
 def word_count(input: str):
+    '''
+    The Spark WordCount wrapper function.
+
+    This runs a Spark WordCount task and returns the results of it.
+
+        Parameters:
+            input (str): The input file to use as input for the task.
+        Returns:
+            results (dict): The time and data output of the task.
+    '''
 
     # Set the base variables
     time_file         = TIME_FILE

@@ -14,11 +14,24 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+
+
 public class SocialNetwork {
+
+
 
     public static class RecommendationMapper
             extends Mapper<LongWritable, Text, IntWritable, Recommendation> {
 
+        /**
+        * Social Network Map function. 
+        * This function is called for every line if the input file, and generate outputs based on them.
+        * The outputs are key/value pairs, that matches a user (key) to a Recommendation (value).
+        *
+        * @param key     The line number
+        * @param value   The text value of the line
+        * @param context The Context object
+        */
         public void map(LongWritable key, Text value, Context context
         ) throws IOException, InterruptedException {
             // Parse user ID and friends list
@@ -46,9 +59,20 @@ public class SocialNetwork {
         }
     }
 
+
+
     public static class RecommendationReducer
             extends Reducer<IntWritable, Recommendation, IntWritable, Text> {
 
+        /**
+        * Social Network Reduce function.
+        * This function is called for each unique key that map function generated as output.
+        * It iterates over the values associated with that key and produce a sorted list of recommendations based on the number of mutual friends.
+        *
+        * @param  key  The user ID
+        * @param  recs All recommendations associated to this user.
+        * @param context The Context object
+        */
         public void reduce(IntWritable key, Iterable<Recommendation> recs,
                            Context context
         ) throws IOException, InterruptedException {
@@ -89,6 +113,12 @@ public class SocialNetwork {
         }
     }
 
+    /**
+    * The main function of the MapReduce class.
+    * This can be called alone for testing purposes.
+    *
+    * @param args The command line arguments.
+    */
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "word count");

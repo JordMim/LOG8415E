@@ -2,19 +2,19 @@
     "per_file": {
         "pg4300.txt": {
             "hadoop": {
-                "average_time": 6.077999999999999
+                "average_time": 5.967999999999999
             },
             "linux": {
-                "average_time": 0.121
+                "average_time": 0.12000000000000002
             }
         }
     },
     "total": {
         "hadoop": {
-            "average_time": 6.077999999999999
+            "average_time": 5.967999999999999
         },
         "linux": {
-            "average_time": 0.121
+            "average_time": 0.12000000000000002
         }
     }
 }
